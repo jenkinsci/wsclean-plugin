@@ -5,7 +5,7 @@
   <artifactId>hudson-wsclean-plugin</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson Distributed Workspace Cleaner</name>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Hudson+Distributed+Workspace+Clean+plugin</url>  
   <properties>
     <!-- which version of Hudson is this plugin built against? -->
