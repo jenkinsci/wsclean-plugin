@@ -154,4 +154,10 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
+    <scm>
+    <connection>scm:svn:https://guest@hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</connection>
+    <developerConnection>scm:svn:https://hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</developerConnection>
+    <url>https://hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</url>
+  </scm>
+  
 </project>
