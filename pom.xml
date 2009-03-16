@@ -5,7 +5,7 @@
   <artifactId>hudson-wsclean-plugin</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson Distributed Workspace Cleaner</name>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Hudson+Distributed+Workspace+Clean+plugin</url>  
   <properties>
     <!-- which version of Hudson is this plugin built against? -->
@@ -155,9 +155,9 @@
     </pluginRepository>
   </pluginRepositories>
     <scm>
-    <connection>scm:svn:https://guest@hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</connection>
-    <developerConnection>scm:svn:https://hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</developerConnection>
-    <url>https://hudson.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</url>
+    <connection>scm:svn:https://guest@hudson.dev.java.net/svn/hudson/tags/hudson-wsclean-plugin-1.0.1</connection>
+    <developerConnection>scm:svn:https://hudson.dev.java.net/svn/hudson/tags/hudson-wsclean-plugin-1.0.1</developerConnection>
+    <url>https://hudson.dev.java.net/svn/hudson/tags/hudson-wsclean-plugin-1.0.1</url>
   </scm>
   
   <distributionManagement>
