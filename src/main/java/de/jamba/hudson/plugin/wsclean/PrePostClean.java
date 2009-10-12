@@ -1,11 +1,11 @@
 package de.jamba.hudson.plugin.wsclean;
 
+import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.model.Node;
 import hudson.model.Slave;
@@ -119,7 +119,7 @@ public class PrePostClean extends BuildWrapper {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked","deprecation"})
 	private void deleteRemote(AbstractBuild build, BuildListener listener,
 			Node node) {
 		VirtualChannel vc = ((Slave) node).getComputer().getChannel();
@@ -161,14 +161,9 @@ public class PrePostClean extends BuildWrapper {
 		}
 	}
 
-	public Descriptor<BuildWrapper> getDescriptor() {
-		return DESCRIPTOR;
-	}
-
-	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
-
+	@Extension
 	public static final class DescriptorImpl extends BuildWrapperDescriptor {
-		DescriptorImpl() {
+		public DescriptorImpl() {
 			super(PrePostClean.class);
 		}
 
