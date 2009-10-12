@@ -16,6 +16,7 @@ import hudson.tasks.BuildWrapperDescriptor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -79,18 +80,22 @@ public class PrePostClean extends BuildWrapper {
 
 		}
 
-		for (Node node : build.getProject().getAssignedLabel().getNodes()) {
-			if (!runNode.equals(node.getNodeName()) ) {
+		Set<Node> usedNodes = build.getProject().getAssignedLabel().getNodes();
+		if (usedNodes != null) {
+			for (Node node : usedNodes) {
+				if (!runNode.equals(node.getNodeName())) {
 
-				if (node.getNodeName().length() == 0) {
-					listener.getLogger().println("clean on master");
-					deleteOnMaster(build, listener);
-				} else {
-					listener.getLogger().println("clean on " + node.getNodeName());
-					deleteRemote(build, listener, node);
+					if (node.getNodeName().length() == 0) {
+						listener.getLogger().println("clean on master");
+						deleteOnMaster(build, listener);
+					} else {
+						listener.getLogger().println(
+								"clean on " + node.getNodeName());
+						deleteRemote(build, listener, node);
+					}
 				}
-			}
 
+			}
 		}
 	}
 

@@ -9,13 +9,14 @@
   <url>http://wiki.hudson-ci.org/display/HUDSON/Hudson+Distributed+Workspace+Clean+plugin</url>  
   <properties>
     <!-- which version of Hudson is this plugin built against? -->
-    <hudson.version>1.277</hudson.version>
+    <hudson.version>1.328</hudson.version>
   </properties>
 	<parent>
         <groupId>org.jvnet.hudson.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.277</version>
-	<relativePath>../../../../Import-277/plugin-pom.xml</relativePath>
+        <version>1.328</version>
+<!-- <relativePath>../../../../Import-277/plugin-pom.xml</relativePath> 
+-->
     </parent>
   <dependencies>
     <dependency>
@@ -46,12 +47,12 @@
     <finalName>${project.artifactId}</finalName>
     <defaultGoal>package</defaultGoal>
     <plugins>
-      <plugin>
+<!--      <plugin>
         <groupId>org.jvnet.hudson.tools</groupId>
         <artifactId>maven-hpi-plugin</artifactId>
         <version>1.27</version>
         <extensions>true</extensions>
-      </plugin>
+      </plugin> -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
