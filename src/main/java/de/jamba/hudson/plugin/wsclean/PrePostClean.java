@@ -7,6 +7,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Hudson;
+import hudson.model.Label;
 import hudson.model.Node;
 import hudson.model.Slave;
 import hudson.remoting.RequestAbortedException;
@@ -80,7 +81,12 @@ public class PrePostClean extends BuildWrapper {
 
 		}
 
-		Set<Node> usedNodes = build.getProject().getAssignedLabel().getNodes();
+		Label assignedLabel = build.getProject().getAssignedLabel();
+		if (assignedLabel == null) {
+ 			listener.getLogger().println("WARNING: project has no assigned label. Aborting.");
+ 			return;
+                }
+ 		Set<Node> usedNodes = assignedLabel.getNodes();
 		if (usedNodes != null) {
 			for (Node node : usedNodes) {
 				if (!runNode.equals(node.getNodeName())) {
