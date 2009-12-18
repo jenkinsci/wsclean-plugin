@@ -83,7 +83,7 @@ public class PrePostClean extends BuildWrapper {
 
 		Label assignedLabel = build.getProject().getAssignedLabel();
 		if (assignedLabel == null) {
- 			listener.getLogger().println("WARNING: project has no assigned label. Aborting.");
+ 			listener.getLogger().println("skipping roaming projects.");
  			return;
                 }
  		Set<Node> usedNodes = assignedLabel.getNodes();
