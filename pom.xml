@@ -19,6 +19,12 @@
   	<name>Fox Mobile Distribution GmbH</name>
   	<url>http://www.jamba.de</url>
   </organization>
+  <developers>
+    <developer>
+      <id>tspengler</id>
+      <name>Thomas Spengler</name>
+    </developer>
+  </developers>
   
   <distributionManagement>
     <repository>
