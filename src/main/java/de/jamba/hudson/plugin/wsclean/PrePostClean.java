@@ -41,7 +41,7 @@ public class PrePostClean extends BuildWrapper {
 		this.behind = !before;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Environment setUp(AbstractBuild build, Launcher launcher,
 			BuildListener listener) throws IOException, InterruptedException {
@@ -67,7 +67,7 @@ public class PrePostClean extends BuildWrapper {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private void executeOnSlaves(AbstractBuild build, BuildListener listener) {
 		listener.getLogger().println("run PrePostClean");
 		// select actual running label
@@ -83,7 +83,7 @@ public class PrePostClean extends BuildWrapper {
 
 		Label assignedLabel = build.getProject().getAssignedLabel();
 		if (assignedLabel == null) {
- 			listener.getLogger().println("skipping roaming projects.");
+ 			listener.getLogger().println("skipping roaming project.");
  			return;
                 }
  		Set<Node> usedNodes = assignedLabel.getNodes();
@@ -97,7 +97,7 @@ public class PrePostClean extends BuildWrapper {
 					} else {
 						listener.getLogger().println(
 								"clean on " + node.getNodeName());
-						deleteRemote(build, listener, node);
+						deleteRemote(build, listener, (Slave)node);
 					}
 				}
 
@@ -105,9 +105,9 @@ public class PrePostClean extends BuildWrapper {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private void deleteOnMaster(AbstractBuild build, BuildListener listener) {
-		if (((Node) Hudson.getInstance()).getNumExecutors() > 0) {
+		if (Hudson.getInstance().getNumExecutors() > 0) {
 			FilePath fp = new FilePath(new File(Hudson.getInstance()
 					.getRootPath()
 					+ "/jobs/" + build.getProject().getName() + "/workspace"));
@@ -125,45 +125,45 @@ public class PrePostClean extends BuildWrapper {
 		}
 	}
 
-	@SuppressWarnings({"unchecked","deprecation"})
+	@SuppressWarnings("rawtypes")
 	private void deleteRemote(AbstractBuild build, BuildListener listener,
-			Node node) {
-		VirtualChannel vc = ((Slave) node).getComputer().getChannel();
-		if (!((Slave) node).getComputer().isConnecting()
-				&& !((Slave) node).getComputer().isTemporarilyOffline()) {
-			((Slave) node).getComputer().connect(true);
-			int i = 0;
-			while (vc == null && ++i < 120) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					listener.getLogger().println(e.getMessage());
-				}
-				vc = ((Slave) node).getComputer().getChannel();
-			}
-
-		}
+			Slave slave) {
+		VirtualChannel vc = slave.getComputer().getChannel();
+//		if (!((Slave) node).getComputer().isConnecting()
+//				&& !((Slave) node).getComputer().isTemporarilyOffline()) {
+//			((Slave) node).getComputer().connect(true);
+//			int i = 0;
+//			while (vc == null && ++i < 120) {
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					listener.getLogger().println(e.getMessage());
+//				}
+//				vc = ((Slave) node).getComputer().getChannel();
+//			}
+//
+//		}
 		if (vc != null) {
-			FilePath fp = new FilePath(vc, ((Slave) node).getRemoteFS()
+			FilePath fp = new FilePath(vc, slave.getRemoteFS()
 					+ "/workspace/" + build.getProject().getName());
 			try {
 				fp.deleteContents();
 			} catch (IOException e) {
 				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
+						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
 				listener.getLogger().print(e);
 			} catch (InterruptedException e) {
 				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
+						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
 				listener.getLogger().print(e);
 			} catch (RequestAbortedException e){
 				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
+						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
 			}
 			
 		} else {
 			listener.getLogger().println(
-					"no deleteChannel on " + node.getNodeName());
+					"no deleteChannel on " + slave.getNodeName());
 		}
 	}
 
@@ -174,7 +174,7 @@ public class PrePostClean extends BuildWrapper {
 		}
 
 		public String getDisplayName() {
-			return "CleanUp all other workspaces in the same slavegroup";
+			return "Clean up all workspaces of this job in the same slavegroup";
 		}
 
 		public boolean isApplicable(AbstractProject<?, ?> item) {
