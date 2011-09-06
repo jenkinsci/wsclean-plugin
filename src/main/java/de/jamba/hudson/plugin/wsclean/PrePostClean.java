@@ -81,7 +81,8 @@ public class PrePostClean extends BuildWrapper {
 
 		}
 
-		Label assignedLabel = build.getProject().getAssignedLabel();
+		AbstractProject project = build.getProject();
+		Label assignedLabel = project.getAssignedLabel();
 		if (assignedLabel == null) {
  			listener.getLogger().println("skipping roaming project.");
  			return;
@@ -93,11 +94,11 @@ public class PrePostClean extends BuildWrapper {
 
 					if (node.getNodeName().length() == 0) {
 						listener.getLogger().println("clean on master");
-						deleteOnMaster(build, listener);
+						deleteOnMaster(project, listener);
 					} else {
 						listener.getLogger().println(
 								"clean on " + node.getNodeName());
-						deleteRemote(build, listener, (Slave)node);
+						deleteRemote(project, listener, (Slave)node);
 					}
 				}
 
@@ -106,27 +107,27 @@ public class PrePostClean extends BuildWrapper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void deleteOnMaster(AbstractBuild build, BuildListener listener) {
+	private void deleteOnMaster(AbstractProject project, BuildListener listener) {
 		if (Hudson.getInstance().getNumExecutors() > 0) {
 			FilePath fp = new FilePath(new File(Hudson.getInstance()
 					.getRootPath()
-					+ "/jobs/" + build.getProject().getName() + "/workspace"));
+					+ "/jobs/" + project.getName() + "/workspace"));
 			try {
 				fp.deleteContents();
 			} catch (IOException e) {
 				listener.getLogger().println(
-						"cat delete on Master " + e.getMessage());
+						"can't delete on Master " + e.getMessage());
 				listener.getLogger().print(e);
 			} catch (InterruptedException e) {
 				listener.getLogger().println(
-						"cat delete on Master " + e.getMessage());
+						"can't delete on Master " + e.getMessage());
 				listener.getLogger().print(e);
 			}
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void deleteRemote(AbstractBuild build, BuildListener listener,
+	private void deleteRemote(AbstractProject project, BuildListener listener,
 			Slave slave) {
 		VirtualChannel vc = slave.getComputer().getChannel();
 //		if (!((Slave) node).getComputer().isConnecting()
@@ -145,7 +146,7 @@ public class PrePostClean extends BuildWrapper {
 //		}
 		if (vc != null) {
 			FilePath fp = new FilePath(vc, slave.getRemoteFS()
-					+ "/workspace/" + build.getProject().getName());
+					+ "/workspace/" + project.getName());
 			try {
 				fp.deleteContents();
 			} catch (IOException e) {
