@@ -6,16 +6,13 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
-import hudson.model.Hudson;
 import hudson.model.Label;
 import hudson.model.Node;
-import hudson.model.Slave;
+import hudson.model.TopLevelItem;
 import hudson.remoting.RequestAbortedException;
-import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
@@ -78,7 +75,6 @@ public class PrePostClean extends BuildWrapper {
 			listener.getLogger().println("running on master");
 		} else {
 			listener.getLogger().println("running on " + runNode);
-
 		}
 
 		AbstractProject project = build.getProject();
@@ -86,20 +82,15 @@ public class PrePostClean extends BuildWrapper {
 		if (assignedLabel == null) {
  			listener.getLogger().println("skipping roaming project.");
  			return;
-                }
- 		Set<Node> usedNodes = assignedLabel.getNodes();
-		if (usedNodes != null) {
-			for (Node node : usedNodes) {
+        }
+ 		Set<Node> nodesForLabel = assignedLabel.getNodes();
+		if (nodesForLabel != null) {
+			for (Node node : nodesForLabel) {
 				if (!runNode.equals(node.getNodeName())) {
-
-					if (node.getNodeName().length() == 0) {
-						listener.getLogger().println("clean on master");
-						deleteOnMaster(project, listener);
-					} else {
+					String normalizedName = "".equals(node.getNodeName()) ? "master" : node.getNodeName();
 						listener.getLogger().println(
-								"clean on " + node.getNodeName());
-						deleteRemote(project, listener, (Slave)node);
-					}
+								"cleaning on " + normalizedName);
+						deleteWorkspaceOn(project, listener, node, normalizedName);
 				}
 
 			}
@@ -107,64 +98,31 @@ public class PrePostClean extends BuildWrapper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void deleteOnMaster(AbstractProject project, BuildListener listener) {
-		if (Hudson.getInstance().getNumExecutors() > 0) {
-			FilePath fp = new FilePath(new File(Hudson.getInstance()
-					.getRootPath()
-					+ "/jobs/" + project.getName() + "/workspace"));
-			try {
-				fp.deleteContents();
-			} catch (IOException e) {
+	private void deleteWorkspaceOn(AbstractProject project, BuildListener listener, Node node, String nodeName) {
+		if (project instanceof TopLevelItem) {
+			FilePath fp = node.getWorkspaceFor((TopLevelItem) project);
+			if (fp != null) {
+				try {
+					fp.deleteContents();
+				} catch (IOException e) {
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
+					listener.getLogger().print(e);
+				} catch (InterruptedException e) {
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
+					listener.getLogger().print(e);
+				} catch (RequestAbortedException e){
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
+				}
+				
+			} else {
 				listener.getLogger().println(
-						"can't delete on Master " + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (InterruptedException e) {
-				listener.getLogger().println(
-						"can't delete on Master " + e.getMessage());
-				listener.getLogger().print(e);
+						"No workspace found on " + nodeName + ". Node is maybe offline.");
 			}
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	private void deleteRemote(AbstractProject project, BuildListener listener,
-			Slave slave) {
-		VirtualChannel vc = slave.getComputer().getChannel();
-//		if (!((Slave) node).getComputer().isConnecting()
-//				&& !((Slave) node).getComputer().isTemporarilyOffline()) {
-//			((Slave) node).getComputer().connect(true);
-//			int i = 0;
-//			while (vc == null && ++i < 120) {
-//				try {
-//					Thread.sleep(1000);
-//				} catch (InterruptedException e) {
-//					listener.getLogger().println(e.getMessage());
-//				}
-//				vc = ((Slave) node).getComputer().getChannel();
-//			}
-//
-//		}
-		if (vc != null) {
-			FilePath fp = new FilePath(vc, slave.getRemoteFS()
-					+ "/workspace/" + project.getName());
-			try {
-				fp.deleteContents();
-			} catch (IOException e) {
-				listener.getLogger().println(
-						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (InterruptedException e) {
-				listener.getLogger().println(
-						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (RequestAbortedException e){
-				listener.getLogger().println(
-						"can't delete on Slave " + slave.getNodeName() + "\n" + e.getMessage());
-			}
-			
 		} else {
-			listener.getLogger().println(
-					"no deleteChannel on " + slave.getNodeName());
+			listener.getLogger().println("Project is no TopLevelItem!? Cannot determine other workspaces!");
 		}
 	}
 
