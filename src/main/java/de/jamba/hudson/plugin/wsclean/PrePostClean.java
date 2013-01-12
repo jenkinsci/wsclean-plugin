@@ -6,16 +6,13 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
-import hudson.model.Hudson;
 import hudson.model.Label;
 import hudson.model.Node;
-import hudson.model.Slave;
+import hudson.model.TopLevelItem;
 import hudson.remoting.RequestAbortedException;
-import hudson.remoting.VirtualChannel;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
@@ -41,7 +38,7 @@ public class PrePostClean extends BuildWrapper {
 		this.behind = !before;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Environment setUp(AbstractBuild build, Launcher launcher,
 			BuildListener listener) throws IOException, InterruptedException {
@@ -67,7 +64,7 @@ public class PrePostClean extends BuildWrapper {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private void executeOnSlaves(AbstractBuild build, BuildListener listener) {
 		listener.getLogger().println("run PrePostClean");
 		// select actual running label
@@ -78,92 +75,54 @@ public class PrePostClean extends BuildWrapper {
 			listener.getLogger().println("running on master");
 		} else {
 			listener.getLogger().println("running on " + runNode);
-
 		}
 
-		Label assignedLabel = build.getProject().getAssignedLabel();
+		AbstractProject project = build.getProject();
+		Label assignedLabel = project.getAssignedLabel();
 		if (assignedLabel == null) {
- 			listener.getLogger().println("skipping roaming projects.");
+ 			listener.getLogger().println("skipping roaming project.");
  			return;
-                }
- 		Set<Node> usedNodes = assignedLabel.getNodes();
-		if (usedNodes != null) {
-			for (Node node : usedNodes) {
+        }
+ 		Set<Node> nodesForLabel = assignedLabel.getNodes();
+		if (nodesForLabel != null) {
+			for (Node node : nodesForLabel) {
 				if (!runNode.equals(node.getNodeName())) {
-
-					if (node.getNodeName().length() == 0) {
-						listener.getLogger().println("clean on master");
-						deleteOnMaster(build, listener);
-					} else {
+					String normalizedName = "".equals(node.getNodeName()) ? "master" : node.getNodeName();
 						listener.getLogger().println(
-								"clean on " + node.getNodeName());
-						deleteRemote(build, listener, node);
-					}
+								"cleaning on " + normalizedName);
+						deleteWorkspaceOn(project, listener, node, normalizedName);
 				}
 
 			}
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	private void deleteOnMaster(AbstractBuild build, BuildListener listener) {
-		if (((Node) Hudson.getInstance()).getNumExecutors() > 0) {
-			FilePath fp = new FilePath(new File(Hudson.getInstance()
-					.getRootPath()
-					+ "/jobs/" + build.getProject().getName() + "/workspace"));
-			try {
-				fp.deleteContents();
-			} catch (IOException e) {
-				listener.getLogger().println(
-						"cat delete on Master " + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (InterruptedException e) {
-				listener.getLogger().println(
-						"cat delete on Master " + e.getMessage());
-				listener.getLogger().print(e);
-			}
-		}
-	}
-
-	@SuppressWarnings({"unchecked","deprecation"})
-	private void deleteRemote(AbstractBuild build, BuildListener listener,
-			Node node) {
-		VirtualChannel vc = ((Slave) node).getComputer().getChannel();
-		if (!((Slave) node).getComputer().isConnecting()
-				&& !((Slave) node).getComputer().isTemporarilyOffline()) {
-			((Slave) node).getComputer().connect(true);
-			int i = 0;
-			while (vc == null && ++i < 120) {
+	@SuppressWarnings("rawtypes")
+	private void deleteWorkspaceOn(AbstractProject project, BuildListener listener, Node node, String nodeName) {
+		if (project instanceof TopLevelItem) {
+			FilePath fp = node.getWorkspaceFor((TopLevelItem) project);
+			if (fp != null) {
 				try {
-					Thread.sleep(1000);
+					fp.deleteContents();
+				} catch (IOException e) {
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
+					listener.getLogger().print(e);
 				} catch (InterruptedException e) {
-					listener.getLogger().println(e.getMessage());
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
+					listener.getLogger().print(e);
+				} catch (RequestAbortedException e){
+					listener.getLogger().println(
+							"can't delete on node " + nodeName + "\n" + e.getMessage());
 				}
-				vc = ((Slave) node).getComputer().getChannel();
+				
+			} else {
+				listener.getLogger().println(
+						"No workspace found on " + nodeName + ". Node is maybe offline.");
 			}
-
-		}
-		if (vc != null) {
-			FilePath fp = new FilePath(vc, ((Slave) node).getRemoteFS()
-					+ "/workspace/" + build.getProject().getName());
-			try {
-				fp.deleteContents();
-			} catch (IOException e) {
-				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (InterruptedException e) {
-				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
-				listener.getLogger().print(e);
-			} catch (RequestAbortedException e){
-				listener.getLogger().println(
-						"cat delete on Slave " + e.getMessage());
-			}
-			
 		} else {
-			listener.getLogger().println(
-					"no deleteChannel on " + node.getNodeName());
+			listener.getLogger().println("Project is no TopLevelItem!? Cannot determine other workspaces!");
 		}
 	}
 
@@ -174,7 +133,7 @@ public class PrePostClean extends BuildWrapper {
 		}
 
 		public String getDisplayName() {
-			return "CleanUp all other workspaces in the same slavegroup";
+			return "Clean up all workspaces of this job in the same slavegroup";
 		}
 
 		public boolean isApplicable(AbstractProject<?, ?> item) {
