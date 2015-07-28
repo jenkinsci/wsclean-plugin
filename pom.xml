@@ -27,9 +27,10 @@
   </developers>
 
   <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</developerConnection>
-    <url>https://svn.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</url>
+    <connection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/wsclean-plugin</url>
+    <tag>HEAD</tag>
   </scm>
 
     <repositories>
