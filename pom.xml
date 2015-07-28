@@ -8,11 +8,11 @@
   <version>1.0.5-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Hudson+Distributed+Workspace+Clean+plugin</url>  
 
-    <parent>
-        <groupId>org.jvnet.hudson.plugins</groupId>
-        <artifactId>plugin</artifactId>
-        <version>1.328</version>
-    </parent>
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.424</version>
+  </parent>
 
   <description>This plugin cleans all workspace directories for the same BuildProject within as same slave group</description>
   <organization>
