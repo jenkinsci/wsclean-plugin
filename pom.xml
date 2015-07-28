@@ -25,20 +25,7 @@
       <name>Thomas Spengler</name>
     </developer>
   </developers>
-  
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>java.net-m2-repository</id>
-      <!--url>svn:https://svn.dev.java.net/svn/maven2-repository/trunk/www/repository/</url-->
-      <url>java-net:/maven2-repository/trunk/repository/</url>
-    </repository>
-    <snapshotRepository>
-      <!-- prevent accidental deployment of SNAPSHOTS to repository -->
-      <id>local</id>
-      <url>file:.</url>
-    </snapshotRepository>
-  </distributionManagement>
+
   <scm>
     <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</connection>
     <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/trunk/hudson/plugins/wsclean</developerConnection>
