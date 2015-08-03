@@ -6,7 +6,7 @@
   <packaging>hpi</packaging>
   <name>Hudson Distributed Workspace Cleaner</name>
   <version>1.0.5-SNAPSHOT</version>
-  <url>http://wiki.hudson-ci.org/display/HUDSON/Hudson+Distributed+Workspace+Clean+plugin</url>  
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/Hudson+Distributed+Workspace+Clean+plugin</url>
 
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
