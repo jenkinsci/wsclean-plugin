@@ -12,8 +12,13 @@ import hudson.model.TopLevelItem;
 import hudson.remoting.RequestAbortedException;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
+import hudson.matrix.MatrixConfiguration;
+import hudson.matrix.MatrixProject;
 
 import java.io.IOException;
+import java.lang.Exception;
+import java.lang.InterruptedException;
+import java.lang.String;
 import java.util.Set;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -88,42 +93,62 @@ public class PrePostClean extends BuildWrapper {
 			for (Node node : nodesForLabel) {
 				if (!runNode.equals(node.getNodeName())) {
 					String normalizedName = "".equals(node.getNodeName()) ? "master" : node.getNodeName();
-						listener.getLogger().println(
-								"cleaning on " + normalizedName);
-						deleteWorkspaceOn(project, listener, node, normalizedName);
+					listener.getLogger().println("cleaning on " + normalizedName);
+					deleteWorkspaceOn(project, listener, node, normalizedName);
 				}
-
 			}
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
 	private void deleteWorkspaceOn(AbstractProject project, BuildListener listener, Node node, String nodeName) {
+		FilePath fp = null;
 		if (project instanceof TopLevelItem) {
-			FilePath fp = node.getWorkspaceFor((TopLevelItem) project);
-			if (fp != null) {
-				try {
-					fp.deleteContents();
-				} catch (IOException e) {
-					listener.getLogger().println(
-							"can't delete on node " + nodeName + "\n" + e.getMessage());
-					listener.getLogger().print(e);
-				} catch (InterruptedException e) {
-					listener.getLogger().println(
-							"can't delete on node " + nodeName + "\n" + e.getMessage());
-					listener.getLogger().print(e);
-				} catch (RequestAbortedException e){
-					listener.getLogger().println(
-							"can't delete on node " + nodeName + "\n" + e.getMessage());
-				}
-				
-			} else {
+			fp = node.getWorkspaceFor((TopLevelItem) project);
+		}
+		else if (project instanceof MatrixConfiguration) {
+			fp = getWorkspaceFor((MatrixConfiguration) project, listener, node, nodeName);
+		}
+		else {
+			listener.getLogger().println("Project is neither TopLevelItem nor MatrixConfiguration!? Cannot determine other workspaces!");
+		}
+		if (fp != null) {
+			try {
+				listener.getLogger().println("Deleting contents of " + fp);
+				fp.deleteContents();
+			} catch (IOException e) {
 				listener.getLogger().println(
-						"No workspace found on " + nodeName + ". Node is maybe offline.");
+						"can't delete on node " + nodeName + "\n" + e.getMessage());
+			} catch (InterruptedException e) {
+				listener.getLogger().println(
+						"can't delete on node " + nodeName + "\n" + e.getMessage());
+			} catch (RequestAbortedException e){
+				listener.getLogger().println(
+						"can't delete on node " + nodeName + "\n" + e.getMessage());
 			}
 		} else {
-			listener.getLogger().println("Project is no TopLevelItem!? Cannot determine other workspaces!");
+			listener.getLogger().println(
+					"No workspace found on " + nodeName + ". Node is maybe offline.");
 		}
+	}
+
+	private FilePath getWorkspaceFor(MatrixConfiguration matrixConfig, BuildListener listener, Node node, String nodeName) {
+		try {
+			String someWorkspacePath = matrixConfig.getSomeWorkspace().getRemote();
+			String matrixWorkspacePath = node.getWorkspaceFor((hudson.model.TopLevelItem) matrixConfig.getParent()).getRemote();
+			String[] parts = matrixWorkspacePath.split("[\\\\/]");
+			String[] configurationWorkspaceParts = someWorkspacePath.split(parts[parts.length - 2] + "[\\\\/]" + parts[parts.length - 1]);
+			String separator = (String) node.toComputer().getSystemProperties().get("file.separator");
+			String resultPath = matrixWorkspacePath + separator + configurationWorkspaceParts[configurationWorkspaceParts.length - 1];
+			return new FilePath(node.getChannel(), String.join(separator, resultPath.split("[\\\\/]")));
+		} catch (IOException e) {
+			listener.getLogger().println("Failure: " + nodeName + "\n" + e.getMessage());
+		} catch (InterruptedException e) {
+			listener.getLogger().println("Failure: " + nodeName + "\n" + e.getMessage());
+		} catch (NullPointerException e){
+			listener.getLogger().println("Failure: " + nodeName + "\n" + e.getMessage());
+		}
+		return null;
 	}
 
 	@Extension
