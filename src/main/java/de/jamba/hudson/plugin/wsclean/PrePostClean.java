@@ -15,6 +15,7 @@ import hudson.tasks.BuildWrapperDescriptor;
 import hudson.matrix.MatrixConfiguration;
 import hudson.matrix.MatrixProject;
 
+import org.apache.commons.lang.StringUtils;
 import java.io.IOException;
 import java.lang.Exception;
 import java.lang.InterruptedException;
@@ -140,7 +141,7 @@ public class PrePostClean extends BuildWrapper {
 			String[] configurationWorkspaceParts = someWorkspacePath.split(parts[parts.length - 2] + "[\\\\/]" + parts[parts.length - 1]);
 			String separator = (String) node.toComputer().getSystemProperties().get("file.separator");
 			String resultPath = matrixWorkspacePath + separator + configurationWorkspaceParts[configurationWorkspaceParts.length - 1];
-			return new FilePath(node.getChannel(), String.join(separator, resultPath.split("[\\\\/]")));
+			return new FilePath(node.getChannel(), StringUtils.join(resultPath.split("[\\\\/]"), separator));
 		} catch (IOException e) {
 			listener.getLogger().println("Failure: " + nodeName + "\n" + e.getMessage());
 		} catch (InterruptedException e) {
