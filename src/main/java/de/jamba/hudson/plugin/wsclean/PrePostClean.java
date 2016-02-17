@@ -133,7 +133,7 @@ public class PrePostClean extends BuildWrapper {
 		}
 
 		public String getDisplayName() {
-			return "Clean up all workspaces of this job in the same slavegroup";
+			return "Clean up all other workspaces of this job in the same slavegroup";
 		}
 
 		public boolean isApplicable(AbstractProject<?, ?> item) {

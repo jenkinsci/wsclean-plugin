@@ -14,7 +14,7 @@
     <version>1.424</version>
   </parent>
 
-  <description>This plugin cleans all workspace directories for the same BuildProject within as same slave group</description>
+  <description>This plugin cleans all other workspace directories for the same BuildProject within as same slave group</description>
   <organization>
   	<name>Fox Mobile Distribution GmbH</name>
   	<url>http://www.jamba.de</url>
