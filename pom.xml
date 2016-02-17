@@ -24,6 +24,10 @@
       <id>tspengler</id>
       <name>Thomas Spengler</name>
     </developer>
+    <developer>
+      <id>aheritier</id>
+      <name>Arnaud Héritier</name>
+    </developer>
   </developers>
 
   <scm>
