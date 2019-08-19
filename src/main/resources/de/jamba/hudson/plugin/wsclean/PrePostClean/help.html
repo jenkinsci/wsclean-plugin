@@ -1,0 +1,14 @@
+<div>
+    Cleans up workspaces from this job's old builds on other slave nodes.
+    <p>
+    By default, a slave node will leave a build's workspace on the slave node's filesystem
+    indefinitely (until it gets overwritten by a new build).
+    When there's a (large) pool of persistent slave nodes available to run a (large) number of builds,
+    eventually every slave node ends up with a copy of every builds' workspace.
+    This is a waste of hardware resources as Jenkins will only look at the workspace on the most
+    recently used slave node.
+    <br>
+    This functionality triggers a clean up of the workspace on all slave nodes
+    that are not currently being used so that, on average, the pool of slaves will only
+    contain one workspace for each job.
+</div>
