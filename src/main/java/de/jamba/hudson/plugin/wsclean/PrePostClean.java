@@ -277,7 +277,7 @@ public class PrePostClean extends BuildWrapper {
         AbstractProject<?, ?> project = build.getProject();
         Label assignedLabel = project.getAssignedLabel();
         if (assignedLabel == null && skipRoaming) {
-            listener.getLogger().println("skipping roaming project.");
+            listener.getLogger().println("Skipping roaming project.");
             return;
         }
         Set<Node> nodesForLabel = assignedLabel != null ? assignedLabel.getNodes() : getAllNonexclusiveNodes(jenkins);
