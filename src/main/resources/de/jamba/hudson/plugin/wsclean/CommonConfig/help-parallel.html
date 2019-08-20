@@ -1,0 +1,8 @@
+<div>
+    If set, clean-up happens on each node in parallel.
+    <br>
+    If not set, each node's clean-up is run to completion before the next is started.
+    <p>
+    Hint: Unless your nodes share the same underlying storage hardware and cannot cope with lots of deletion operations "all at once", it is suggested to have this flag set.
+    If it is unset and you have lots of nodes, your builds will be delayed due to the need to contact each node in sequence.
+</div>
