@@ -1,0 +1,43 @@
+<div>
+    Specifies what information is used to decide what nodes (and where on
+    those nodes) are cleaned.
+    <dl>
+        <dt>Clean nodes that could be used</dt>
+        <dd>
+            The node labels are checked to see which nodes are <em>able</em> to
+            run the build and any workspaces found (aside from those in use) are
+            deleted.
+            <p>
+                Note: In situations where there have been more than one build of a
+                job running concurrently on a single node (i.e. the node has
+                multiple executors and the project has concurrent builds enabled)
+                then every build except the first will run on a non-default
+                workspace (e.g.
+                <code>.../workspace/ProjectName@2</code>
+                ). This method will <em>not</em> clean these non-default workspaces.
+            </p>
+            This method is best used where so little build history is kept (i.e.
+            projects have "Discard old builds" set to a small limit) that Jenkins
+            "has forgotten" some of the places where the build has run.
+        </dd>
+        <dt>Clean nodes that have been used</dt>
+        <dd>
+            The build history is scanned to see what nodes and workspaces were <em>actually</em>
+            used, and then all that are not currently in use are deleted.
+            <p>Note: This can be computationally expensive if projects have a
+                huge amount of build history to scan.</p>
+            This method is best used where enough build history is kept that
+            nodes will have their workspace wiped before that build is forgotten,
+            but not so much history is kept that it becomes a performance
+            problem.
+        </dd>
+        <dt>Clean nodes that could be, or have been, used</dt>
+        <dd>The union of both of the above.</dd>
+    </dl>
+    Note: In all cases, nodes that have the
+    <code>Skip this node when cleaning old build workspaces</code>
+    node property set will be skipped over, as will nodes whose name
+    matches a pattern in the
+    <code>Nodes to ignore</code>
+    field (below).
+</div>

@@ -1,0 +1,17 @@
+<div>
+    List of regular expressions naming nodes to be excluded from cleaning.
+    <p>Normally, a node property would be set on a node to indicate
+        that it should be excluded from cleanup activities. e.g.
+        dynamically-created nodes that are used once and then thrown away.
+        However, not all node technologies support node properties, so in this
+        case a set of regular expressions can be provided that will be matched
+        against the node name and, if any regex matches a node name, that node
+        will be excluded from cleanup activities.</p>
+    Each (non-empty) line must be a valid regular expression. e.g.
+    <code>^docker-.*$</code>
+    <p>
+        Note: For the purposes of this matching, the name of the master node
+        is the empty string not &quot;master&quot; so, if you want to exclude
+        the master node from cleaning, you'll need to include a line saying
+        <code>^$</code>
+</div>
