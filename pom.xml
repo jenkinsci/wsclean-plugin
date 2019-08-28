@@ -1,13 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.jamba.hudson.plugin.wsclean</groupId>
     <artifactId>hudson-wsclean-plugin</artifactId>
     <packaging>hpi</packaging>
     <name>Distributed Workspace Clean plugin</name>
-    <version>${revision}${changelist}</version>
+    <version>1.0.6</version>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Distributed+Workspace+Clean+plugin</url>
 
     <parent>
@@ -44,7 +42,7 @@
         <connection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/wsclean-plugin</url>
-        <tag>HEAD</tag>
+        <tag>hudson-wsclean-plugin-1.0.6</tag>
     </scm>
 
     <repositories>
