@@ -14,25 +14,22 @@
         <version>3.19</version>
     </parent>
 
-    <description>This plugin cleans all other workspace directories for the same BuildProject within as same slave group</description>
+    <description>This plugin cleans all old workspace directories used by the job</description>
     <organization>
         <name>Fox Mobile Distribution GmbH</name>
         <url>http://www.jamba.de</url>
     </organization>
     <developers>
+        <!-- Original author was Thomas Spengler, aka tspengler.  No longer involved. -->
+        <!-- Subsequently maintained by Arnaud Héritier, aka aheritier.  No longer involved. -->
         <developer>
-            <id>tspengler</id>
-            <name>Thomas Spengler</name>
-        </developer>
-        <developer>
-            <id>aheritier</id>
-            <name>Arnaud Héritier</name>
+            <!-- Currently maintained by / last touched by -->
+            <id>pjdarton</id>
+            <name>Peter Darton</name>
         </developer>
     </developers>
 
     <properties>
-        <revision>1.0.6</revision>
-        <changelist>-SNAPSHOT</changelist>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.level>8</java.level>
         <jenkins.version>2.60.3</jenkins.version>
