@@ -6,7 +6,7 @@
     <packaging>hpi</packaging>
     <name>Distributed Workspace Clean plugin</name>
     <version>1.0.7-SNAPSHOT</version>
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/Distributed+Workspace+Clean+plugin</url>
+    <url>https://wiki.jenkins.io/display/JENKINS/Distributed+Workspace+Clean+plugin</url>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
@@ -15,15 +15,21 @@
     </parent>
 
     <description>This plugin cleans all old workspace directories used by the job</description>
-    <organization>
-        <name>Fox Mobile Distribution GmbH</name>
-        <url>http://www.jamba.de</url>
-    </organization>
+
+    <licenses>
+        <license>
+            <name>The MIT license</name>
+            <url>https://www.opensource.org/licenses/mit</url>
+            <distribution>repo</distribution>
+        </license>
+     </licenses>
+
     <developers>
-        <!-- Original author was Thomas Spengler, aka tspengler.  No longer involved. -->
-        <!-- Subsequently maintained by Arnaud Héritier, aka aheritier.  No longer involved. -->
+        <!-- Original (in 2009) author was Thomas Spengler, aka tspengler.  No longer involved. -->
+        <!-- Subsequently (2010) maintained by Alan Harder, aka alanharder.  No longer involved. -->
+        <!-- Subsequently (2015-2016) maintained by Arnaud Héritier, aka aheritier.  No longer involved. -->
         <developer>
-            <!-- Currently maintained by / last touched by -->
+            <!-- Currently (2018) maintained by / last touched by -->
             <id>pjdarton</id>
             <name>Peter Darton</name>
         </developer>
