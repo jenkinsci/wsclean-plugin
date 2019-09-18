@@ -42,7 +42,6 @@ import hudson.model.TopLevelItem;
 import hudson.remoting.RequestAbortedException;
 import hudson.tasks.BuildWrapper;
 import hudson.tasks.BuildWrapperDescriptor;
-import hudson.util.FormValidation;
 import hudson.util.RunList;
 import jenkins.model.Jenkins;
 
