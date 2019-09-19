@@ -18,20 +18,40 @@
 
     <licenses>
         <license>
-            <name>The MIT license</name>
-            <url>https://www.opensource.org/licenses/mit</url>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
             <distribution>repo</distribution>
         </license>
      </licenses>
 
     <developers>
-        <!-- Original (in 2009) author was Thomas Spengler, aka tspengler.  No longer involved. -->
-        <!-- Subsequently (2010) maintained by Alan Harder, aka alanharder.  No longer involved. -->
-        <!-- Subsequently (2015-2016) maintained by Arnaud Héritier, aka aheritier.  No longer involved. -->
         <developer>
-            <!-- Currently (2018) maintained by / last touched by -->
+            <id>tspengler</id>
+            <name>Thomas Spengler</name>
+            <roles>
+                <role>maintainer (retired)</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>alanharder</id>
+            <name>Alan Harder</name>
+            <roles>
+                <role>maintainer (retired)</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>aheritier</id>
+            <name>Arnaud Héritier</name>
+            <roles>
+                <role>maintainer (retired)</role>
+            </roles>
+        </developer>
+        <developer>
             <id>pjdarton</id>
             <name>Peter Darton</name>
+            <roles>
+                <role>maintainer</role>
+            </roles>
         </developer>
     </developers>
 
