@@ -5,7 +5,7 @@
     <artifactId>hudson-wsclean-plugin</artifactId>
     <packaging>hpi</packaging>
     <name>Distributed Workspace Clean plugin</name>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.7</version>
     <url>https://wiki.jenkins.io/display/JENKINS/Distributed+Workspace+Clean+plugin</url>
 
     <parent>
@@ -65,7 +65,7 @@
         <connection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/wsclean-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/wsclean-plugin</url>
-        <tag>HEAD</tag>
+        <tag>hudson-wsclean-plugin-1.0.7</tag>
     </scm>
 
     <repositories>
