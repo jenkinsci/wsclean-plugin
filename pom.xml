@@ -6,7 +6,7 @@
     <packaging>hpi</packaging>
     <name>Distributed Workspace Clean plugin</name>
     <version>1.0.8-SNAPSHOT</version>
-    <url>https://wiki.jenkins.io/display/JENKINS/Distributed+Workspace+Clean+plugin</url>
+    <url>https://github.com/jenkinsci/wsclean-plugin</url>
 
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
