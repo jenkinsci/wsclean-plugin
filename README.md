@@ -4,7 +4,7 @@
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/hudson-wsclean-plugin.svg?color=blue)](https://plugins.jenkins.io/hudson-wsclean-plugin)
 [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/wsclean-plugin/master)](https://ci.jenkins.io/job/Plugins/job/wsclean-plugin/job/master/)
 
-### Overview
+## Overview
 
 The
 Distributed Workspace Clean plugin
@@ -30,9 +30,9 @@ you'd only keep one workspace for each job across all the nodes,
 **Note:** This plugin was originally developed before pipeline builds existed.
 It's intended for use with "classic" builds.
 
-### Usage
+## Usage
 
-#### How to use it
+### How to use it
 
 This functionality can be enabled by ticking the box in the "Build Environment" section of a job's configuration.
 
@@ -43,7 +43,7 @@ if you would prefer the clean to happen at the start of the build instead of at 
 
 ![](docs/images/job-configuration-expanded.png)
 
-#### How to avoid it
+### How to avoid it
 
 If you have nodes that should never have their workspaces cleaned
 (by this plugin)
@@ -65,7 +65,7 @@ If you can't add a node property due to limitations on the type of node
 (e.g. not all cloud plugins support node properties),
 you can achieve the same effect using the "Nodes to ignore" field in the global configuration.
 
-#### How to control it
+### How to control it
 
 Further options to control which nodes are selected for cleanup can be found in the global configuration page
 (Manage Jenkins -> Configure System):
@@ -81,7 +81,7 @@ As of version 1.0.6 onwards, you can choose to clean only where previous complet
 
 For further details, see the help text associated with each configuration option.
 
-### See also
+## See also
 * [Software licence](LICENSE)
 * Support and [contribution guide](CONTRIBUTING.md)
 * [Changelog](CHANGELOG.md)

@@ -2,8 +2,8 @@
 
 ### Version 1.0.7
 _September 24th, 2019:_
-* Functionality unchanged from 1.0.6.
-* :+1:
+* :grey_exclamation: Functionality unchanged from 1.0.6.
+* :heavy_check_mark:
 Meta-data for plugin now lists license and developers (past and present).
 
 ### Version 1.0.6
@@ -11,13 +11,13 @@ _August 28th, 2019:_
 * :x:
 Don't clean concurrently-running builds
 ([JENKINS-43269](https://issues.jenkins-ci.org/browse/JENKINS-43269))
-* :+1:
+* :heavy_check_mark:
 Implement timeouts so dud slave nodes don't block all builds
-* :+1:
+* :heavy_check_mark:
 Implement "parallel cleanup" to improve performance
-* :+1:
+* :heavy_check_mark:
 Implement "skip node" node property and skip-by-name functionality
-* :+1:
+* :heavy_check_mark:
 Make "Skip roaming" configurable
 
 ### Version 1.0.5
@@ -29,9 +29,9 @@ Fix Compatibility with Folder plugin
 Fix deletion on master
 * :x:
 Don't wait for slave to become online/don't try to reconnect slave, if slave is offline
-* :+1:
+* :heavy_check_mark:
 Various cleanup/refactoring
-* :+1:
+* :heavy_check_mark:
 First release from GitHub
 
 ### Version 1.0.4
@@ -40,7 +40,7 @@ _January 7th, 2010:_
 Fix
 [NPE](http://n4.nabble.com/Hudson-bug-with-Ehcache-td787618.html)
 while running PrePostClean on a project that can roam
-* :+1:
+* :heavy_check_mark:
 Update code for more recent Hudson
 
 ### Version 1.0.3
@@ -58,5 +58,5 @@ NPE while running PrePostClean without any slaves
 Fix for release
 
 ### Version 1.0.1
-* :+1:
+* :heavy_check_mark:
 Initial checkin
