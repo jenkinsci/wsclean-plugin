@@ -256,7 +256,7 @@ public class PrePostClean extends BuildWrapper {
     }
 
     /**
-     * Uses the job label expression to determine what slave nodes this build could
+     * Uses the job label expression to determine what agent nodes this build could
      * run on and, from that, guess what workspaces we should delete. Note: This
      * does not take concurrent builds into account.
      * 
@@ -302,7 +302,7 @@ public class PrePostClean extends BuildWrapper {
     }
 
     /**
-     * Uses the old build history to determine what workspaces (on what slave nodes)
+     * Uses the old build history to determine what workspaces (on what agent nodes)
      * we should delete.
      * 
      * @param wssCurrentlyInUse    Where to record workspaces that are currently in
@@ -400,8 +400,8 @@ public class PrePostClean extends BuildWrapper {
     }
 
     /**
-     * Deletes workspaces, using a separate thread for each slave node affected so
-     * that all the slave nodes do their deletions in parallel.
+     * Deletes workspaces, using a separate thread for each agent node affected so
+     * that all the agent nodes do their deletions in parallel.
      * 
      * @param build                 The build this is for. This is only used for
      *                              diagnostic logging.

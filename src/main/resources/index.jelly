@@ -1,4 +1,4 @@
 <?jelly escape-by-default='true'?>
 <div>
-    Allows cleanup of old job workspaces on slaves used by old builds.
+    Allows cleanup of old job workspaces on agents used by old builds.
 </div>

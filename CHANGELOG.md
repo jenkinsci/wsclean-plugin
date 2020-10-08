@@ -12,7 +12,7 @@ _August 28th, 2019:_
 Don't clean concurrently-running builds
 ([JENKINS-43269](https://issues.jenkins-ci.org/browse/JENKINS-43269))
 * :heavy_check_mark:
-Implement timeouts so dud slave nodes don't block all builds
+Implement timeouts so dud agent nodes don't block all builds
 * :heavy_check_mark:
 Implement "parallel cleanup" to improve performance
 * :heavy_check_mark:
@@ -28,7 +28,7 @@ Fix Compatibility with Folder plugin
 * :x:
 Fix deletion on master
 * :x:
-Don't wait for slave to become online/don't try to reconnect slave, if slave is offline
+Don't wait for agent to become online/don't try to reconnect agent, if agent is offline
 * :heavy_check_mark:
 Various cleanup/refactoring
 * :heavy_check_mark:
@@ -51,7 +51,7 @@ Fix broken classinformation due to change of from interface to abstract class.
 Fix
 [JENKINS-4630](https://issues.jenkins-ci.org/browse/JENKINS-4630)
 * :x:
-NPE while running PrePostClean without any slaves
+NPE while running PrePostClean without any agents
 
 ### Version 1.0.2
 * :x:
