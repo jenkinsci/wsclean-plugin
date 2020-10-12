@@ -265,7 +265,7 @@ public class PrePostCleanTest {
                 false, true);
         final AbstractBuild mockBuild10 = mockBuild("mockBuild10-concurrentWithUs-runningOnNode2", mockNode2, normalWs,
                 false, true);
-        final AbstractBuild mockBuild11 = mockBuild("mockBuild11-allocatedToSlaveButNotStartedYet", mockNode2, weirdWs,
+        final AbstractBuild mockBuild11 = mockBuild("mockBuild11-allocatedToAgentButNotStartedYet", mockNode2, weirdWs,
                 true, false);
         final AbstractBuild mockBuild12 = mockBuild("mockBuild12-notStartedYet", null, normalWs, true, false);
         final List<AbstractBuild> listOfMockBuildHistory = ImmutableList.of(mockBuild12, mockBuild11, mockBuild10,
