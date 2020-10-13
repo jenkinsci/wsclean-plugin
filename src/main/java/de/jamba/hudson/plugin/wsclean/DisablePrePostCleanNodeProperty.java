@@ -8,7 +8,7 @@ import hudson.slaves.NodeProperty;
 import hudson.slaves.NodePropertyDescriptor;
 
 /**
- * Jenkins slave {@link NodeProperty} that, when set, causes
+ * Jenkins agent {@link NodeProperty} that, when set, causes
  * {@link PrePostClean} to skip the {@link Node}.
  */
 public class DisablePrePostCleanNodeProperty extends NodeProperty<Node> {
