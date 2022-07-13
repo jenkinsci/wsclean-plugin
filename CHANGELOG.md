@@ -26,7 +26,7 @@ _August 6th, 2015:_
 Fix Compatibility with Folder plugin
 ([JENKINS-29682](https://issues.jenkins-ci.org/browse/JENKINS-29682))
 * :x:
-Fix deletion on master
+Fix deletion on controller
 * :x:
 Don't wait for agent to become online/don't try to reconnect agent, if agent is offline
 * :heavy_check_mark:
