@@ -11,7 +11,8 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>3.19</version>
+        <version>4.51</version>
+        <relativePath />
     </parent>
 
     <description>This plugin cleans all old workspace directories used by the job</description>
@@ -24,41 +25,9 @@
         </license>
      </licenses>
 
-    <developers>
-        <developer>
-            <id>tspengler</id>
-            <name>Thomas Spengler</name>
-            <roles>
-                <role>maintainer (retired)</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>alanharder</id>
-            <name>Alan Harder</name>
-            <roles>
-                <role>maintainer (retired)</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>aheritier</id>
-            <name>Arnaud Héritier</name>
-            <roles>
-                <role>maintainer (retired)</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>pjdarton</id>
-            <name>Peter Darton</name>
-            <roles>
-                <role>maintainer</role>
-            </roles>
-        </developer>
-    </developers>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.level>8</java.level>
-        <jenkins.version>2.60.3</jenkins.version>
+        <jenkins.version>2.346.3</jenkins.version>
     </properties>
 
     <scm>
